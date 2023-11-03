@@ -36,8 +36,7 @@ export default class Game {
       this.resetGame()
     }
     if (this.enemies.length > 29){
-      this.player.lives -= 1
-      this.explode += 5
+      this.enemyInterval -= 500
       this.enemies = []
     }
     if (!this.gameOver) {
@@ -49,17 +48,23 @@ export default class Game {
     }
     // Create enemies
     if (this.enemyTimer > this.enemyInterval) {
-      let x = Math.random() < 0.5 ? 0 : this.width // spawn on left or right edge
-      let y = Math.random() < 0.5 ? 0 : this.height // spawn on top or bottom edge
-      if (x === 0) {
-        y = Math.random() * this.height // if on left edge, randomize y position
-      } else if (x === this.width) {
-        y = Math.random() * this.height // if on right edge, randomize y position
-      } else if (y === 0) {
-        x = Math.random() * this.width // if on top edge, randomize x position
+      let side = (Math.random() * (4 - 0) + 0)
+      let x = 0
+      let y = 0
+      if (side < 1) {
+        x = 50
+        y = (Math.random() * (this.height - 0) + 0)
+      } else if (side < 2) {
+        x = (Math.random() * (this.width - 0) + 0)
+        y = 50
+      } else if (side < 3) {
+        x = (this.width - 50)
+        y = (Math.random() * (this.height - 0) + 0)
       } else {
-        x = Math.random() * this.width // if on bottom edge, randomizea x position
+        x = (Math.random() * (this.width - 0) + 0)
+        y = (this.height-50)
       }
+
       this.enemies.push(new Pumpkin(this, x, y))
 
       this.enemyTimer = 0
