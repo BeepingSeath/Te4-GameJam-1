@@ -33,7 +33,9 @@ export default class Game {
 
   update(deltaTime) {
     if (this.gameBegin) {
-      this.resetGame()
+      this.enemies = []
+      this.pickups = []
+      this.enemyInterval = Infinity
     }
     if (this.enemies.length > 29) {
       if (this.enemyInterval == 0) {
@@ -157,8 +159,9 @@ export default class Game {
     this.player.y = this.height / 2 - this.player.height / 2
     this.gameTime = 0
     this.gameOver = false
-    this.gameBegin = false
     this.player.projectiles = []
+    this.enemies = []
+    this.pickups = []
   }
 
   draw(context) {

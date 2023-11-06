@@ -27,7 +27,8 @@ export default class InputHandler {
         this.game.debug = !this.game.debug
       }
       if (event.key === 'r') {
-        this.game.gameBegin = true
+        this.game.gameBegin = false
+        game.resetGame()
       }
     })
 
