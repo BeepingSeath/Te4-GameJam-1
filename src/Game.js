@@ -32,17 +32,23 @@ export default class Game {
   }
 
   update(deltaTime) {
-    if (this.gameBegin){
+    if (this.gameBegin) {
       this.resetGame()
     }
-    if (this.enemies.length > 29){
-      this.enemyInterval -= 500
-      this.enemies = []
+    if (this.enemies.length > 29) {
+      if (this.enemyInterval == 0) {
+        this.explode += 5
+      }
+      else {
+        this.enemyInterval -= 500
+        this.enemies = []
+      }
     }
     if (!this.gameOver) {
       this.gameTime += deltaTime
     } else {
       this.enemies = []
+      this.pickups = []
       this.enemyInterval = Infinity
 
     }
@@ -62,7 +68,7 @@ export default class Game {
         y = (Math.random() * (this.height - 0) + 0)
       } else {
         x = (Math.random() * (this.width - 0) + 0)
-        y = (this.height-50)
+        y = (this.height - 50)
       }
 
       this.enemies.push(new Pumpkin(this, x, y))
@@ -111,19 +117,19 @@ export default class Game {
           console.log(pickup.taste)
           if (pickup.taste < 1) {
             this.player.damage++
-          } else if (pickup.taste < 2){
+          } else if (pickup.taste < 2) {
             this.player.lives += 5
-          } else if (pickup.taste < 3){
+          } else if (pickup.taste < 3) {
             this.player.shots++
-          } else if (pickup.taste < 4){
+          } else if (pickup.taste < 4) {
             this.player.maxSpeed += 1
           } else {
-            if (this.player.width > 8 && this.player.height > 8){
+            if (this.player.width > 8 && this.player.height > 8) {
               this.player.width *= 0.75
               this.player.height *= 0.75
-              } else {
-                this.player.lives += 5
-              }
+            } else {
+              this.player.lives += 5
+            }
           }
         }
         pickup.markedForDeletion = true
@@ -152,7 +158,6 @@ export default class Game {
     this.gameTime = 0
     this.gameOver = false
     this.gameBegin = false
-    this.enemies = []
     this.player.projectiles = []
   }
 
